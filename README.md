@@ -11,10 +11,11 @@ The fonts are not included, the browser will use a fallback font.
 
 ## Install
 
-Zoom level | Download size | Disk space required | during installation
-10 | 4.1 GB | 5.1 GB | 10 GB
-11 | 8.6 GB | 12.1 GB | 21 GB
-12 | 19.5 GB | 29.5 GB | 50 GB
+| Zoom level | Download size | Disk space required | during installation |
+| - | - | - | - |
+| 10 | 4.1 GB | 5.1 GB | 10 GB |
+| 11 | 8.6 GB | 12.1 GB | 21 GB |
+| 12 | 19.5 GB | 29.5 GB | 50 GB |
 
 During installation, there also needs to be space for the download, so there is need for more
 storage during that, see the table above.
