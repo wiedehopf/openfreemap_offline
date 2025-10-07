@@ -25,6 +25,14 @@ wget https://raw.githubusercontent.com/wiedehopf/openfreemap_offline/refs/heads/
 bash install.sh ZOOMLEVEL
 ```
 
+If you're using a docker container, you will also need to use a volume mount to make the files
+visible inside the container.
+
+```
+    volumes:
+      - /usr/local/share/openfreemap_offline/mnt:/usr/local/share/openfreemap_offline/mnt
+```
+
 
 ## Uninstall
 
