@@ -1,0 +1,73 @@
+#!/bin/bash
+
+set -e
+trap 'echo "[ERROR] Error in line $LINENO when executing: $BASH_COMMAND"' ERR
+renice 10 $$ &>/dev/null
+
+level="$1"
+
+# make sure level is one of the expected values
+case "$level" in
+    10)
+        lastpart="01"
+        ;;
+    11)
+        lastpart="04"
+        ;;
+    12)
+        lastpart="09"
+        ;;
+    *)
+        echo "please specify the level of detail you want to download, available levels are 10, 11 and 12"
+        exit 1
+        ;;
+esac
+
+
+dir="/usr/local/share/openfreemap_offline"
+mountpoint="${dir}/mnt"
+
+mkdir -p "$mountpoint"
+cd "$dir"
+
+image="${dir}/tiles.${level}.btrfs"
+
+if [[ ! -f "${image}" ]]; then
+
+    files=()
+
+    for part in $(seq -w "00" "$lastpart"); do
+        file="tiles.${level}.btrfs.zst.part${part}"
+        wget --compression=none -c "https://github.com/wiedehopf/openfreemap_offline/releases/download/v0.1/${file}"
+        files+=("$file")
+    done
+
+    cat "${files[@]}" | zstd -d -c -v > "${image}.tmp"
+    mv "${image}.tmp" "${image}"
+    rm -f "${files[@]}"
+fi
+
+if mount | grep -qs "$mountpoint"; then
+    umount "$mountpoint"
+fi
+
+cat > /usr/lib/systemd/system/openfreemap_offline.service << EOF
+[Unit]
+Description=openfreemap offline map tiles
+Documentation=https://github.com/wiedehopf/openfreemap_offline
+
+[Service]
+ExecStart=/usr/bin/mount -v -t btrfs ${image} ${mountpoint}
+ExecStop=/usr/bin/umount -v ${mountpoint}
+Type=oneshot
+RemainAfterExit=true
+
+[Install]
+WantedBy=default.target
+EOF
+
+systemctl enable openfreemap_offline.service
+systemctl restart openfreemap_offline.service
+
+echo "all done, please rerun the tar1090 install script or restart the container serving the tar1090 map, after that the offline map should be available"
+
