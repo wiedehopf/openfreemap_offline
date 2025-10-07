@@ -13,6 +13,7 @@ The fonts are not included, the browser will use a fallback font.
 
 | Zoom level | Download size | Disk space required | during installation |
 | - | - | - | - |
+| 09 | 2.5 GB | 3.3 GB | 6 GB |
 | 10 | 4.1 GB | 5.1 GB | 10 GB |
 | 11 | 8.6 GB | 12.1 GB | 21 GB |
 | 12 | 19.5 GB | 29.5 GB | 50 GB |
@@ -20,9 +21,14 @@ The fonts are not included, the browser will use a fallback font.
 During installation, there also needs to be space for the download, so there is need for more
 storage during that, see the table above.
 
+Decide which zoom level to install, you don't need to install multiple zoom levels.  If you decide
+to install a higher zoom level after trying a lower one, it will simply ignore the old data. Disk
+space for the other zoom level version won't be freed but you could manually do that in
+/usr/local/share/openfreemap_offline/)
+
 ```
 sudo su -
-wget https://raw.githubusercontent.com/wiedehopf/openfreemap_offline/refs/heads/master/install.sh
+wget -O install.sh https://raw.githubusercontent.com/wiedehopf/openfreemap_offline/refs/heads/master/install.sh
 bash install.sh ZOOMLEVEL
 ```
 
