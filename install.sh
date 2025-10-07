@@ -81,7 +81,7 @@ systemctl enable openfreemap_offline.service
 systemctl restart openfreemap_offline.service
 
 # download styles, one of them wasn't included in the big downloads
-for style in liberty positron bright; do
+for style in liberty positron bright dark fiord; do
     if ! wget -q -O "${mountpoint}/${style}" "${release_url}/${style}"; then
         echo "ERROR downloading ${release_url}/${style}"
     fi
