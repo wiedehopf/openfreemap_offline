@@ -53,7 +53,7 @@ else
 
     echo "decompressing downloaded data, this will take a while"
 
-    cat "${files[@]}" | zstd -d -c -v > "${image}.tmp"
+    cat "${files[@]}" | zstd -d -c -v -o "${image}.tmp"
     mv "${image}.tmp" "${image}"
     rm -f "${files[@]}"
 fi
